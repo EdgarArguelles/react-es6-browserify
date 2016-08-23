@@ -52,8 +52,14 @@ gulp.task('html', () => {
     .pipe(connect.reload());
 });
 
+// Move assets to dist folder
+gulp.task('assets', () => {
+  gulp.src(['src/assets/**'])
+    .pipe(gulp.dest(config.paths.dist + '/css'));
+});
+
 // Compile, bundle and move to dist SASS files
-gulp.task('css', () => {
+gulp.task('css', ['assets'], () => {
   gulp.src(config.paths.mainScss) // source of main SASS file
     .pipe(bulkSass()) // Includes all SASS files into main one
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // Process main SASS file
